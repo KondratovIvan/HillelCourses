@@ -20,39 +20,25 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
-
     @ExceptionHandler(ResourceWasDeletedException.class)
     protected ResponseEntity<MyGlobalExceptionHandler> handleDeleteException() {
         return new ResponseEntity<>(new MyGlobalExceptionHandler("This user was deleted"), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(DataAbsentException.class)
+    protected ResponseEntity<MyGlobalExceptionHandler> dataAbsentException() {
+        return new ResponseEntity<>(new MyGlobalExceptionHandler("Not enough data"), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(WrongTypeIdException.class)
+    protected ResponseEntity<MyGlobalExceptionHandler> wrongTypeIdException() {
+        return new ResponseEntity<>(new MyGlobalExceptionHandler("Wrong type of data in ID"), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
+    public ResponseEntity<?> globleExcpetionHandler(Exception ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler(WrongTypeOfDataException.class)
-    public ResponseEntity<?> wrongTypeOfDataHandler(Exception ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
-    @ExceptionHandler(AccessException.class)
-    public ResponseEntity<?> accessExceptionHandler(Exception ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler(WrongArgumentException.class)
-    public ResponseEntity<?> wrongArgumentExceptionHandler(Exception ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(ResourceHasNoDataException.class)
-    public ResponseEntity<?> resourceHasNoDataHandler(Exception ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.NO_CONTENT);
     }
 
     @Data

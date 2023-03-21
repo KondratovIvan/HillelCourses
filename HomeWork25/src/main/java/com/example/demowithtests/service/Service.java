@@ -2,15 +2,18 @@ package com.example.demowithtests.service;
 
 import com.example.demowithtests.domain.Employee;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface Service {
 
-    Employee create(Employee employee);
+    Employee create(Employee employee) ;
 
     List<Employee> getAll();
 
-    Employee getById(Integer id);
+//    Employee getById(Integer id);
+
+    Employee getById(String id);
 
     Employee updateById(Integer id, Employee plane);
 
@@ -18,17 +21,16 @@ public interface Service {
 
     void removeAll();
 
-    List<Employee> processor();
+   List<Employee> processor();
 
     List<Employee> sendEmailByCountry(String country, String text);
 
     List<Employee> sendEmailByCity(String city, String text);
 
-    List<Employee> sendEmailByStreet(String street, String text);
+    List<Employee> sendEmailByCountryAndCity(String country, String city, String text);
 
-    void databaseFiller(Integer amount);
+    void fillData();
 
-    void databaseUpdater(Integer amount, String country);
-    void databaseSQLUpdater(Integer amount, String country);
-    void databaseSQLUpdaterUpd(Integer startId,Integer finishId, String country);
+    void updateDateById(Integer startId, Integer endId);
+
 }

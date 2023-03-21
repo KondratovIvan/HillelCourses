@@ -18,16 +18,30 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
     private String email;
+    private String name;
     private String country;
+
+
     private Boolean isDeleted = Boolean.FALSE;
 
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
+    }
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
     private Set<Address> addresses = new HashSet<>();
 
+    public Employee(String name, String country, Boolean isDeleted) {
+        this.name = name;
+        this.country = country;
+        this.isDeleted = isDeleted;
+    }
 
     public Boolean getIsDeleted() {
         return isDeleted;
@@ -69,30 +83,16 @@ public class Employee {
         this.email = email;
     }
 
-    public Boolean getDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public Set<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
-    }
-
     @Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", country='" + country + '\'' +
-                ", email='" + email + '\'' +
-                ", isDeleted=" + isDeleted +
+//                ", email='" + email + '\'' +
+//                ", isDeleted=" + isDeleted +
                 '}';
     }
+
+
 }
