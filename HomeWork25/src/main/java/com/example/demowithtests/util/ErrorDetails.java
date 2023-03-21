@@ -14,10 +14,6 @@ public class ErrorDetails {
         this.details = details;
     }
 
-    public ErrorDetails(String message) {
-        this.message = message;
-    }
-
     public Date getTimestamp() {
         return timestamp;
     }

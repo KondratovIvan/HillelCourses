@@ -4,66 +4,106 @@ import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.dto.EmployeeDto;
 import com.example.demowithtests.dto.EmployeeReadDto;
 import com.example.demowithtests.service.Service;
-import com.example.demowithtests.util.orika.EmployeeConverter;
+import com.example.demowithtests.util.WrongTypeOfDataException;
+import com.example.demowithtests.util.mapStruct.EmployeeMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+
+
 @RestController
-@Slf4j
 @AllArgsConstructor
+@Slf4j
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class Controller {
 
     private final Service service;
-    private final EmployeeConverter employeeConverter;
+
+//    public EmployeeReadDto dtoMaker(@RequestBody EmployeeDto employeeDto, String method,@PathVariable String id){
+//        var entity = employeeConverter.getMapperFacade().map(employeeDto, Employee.class);
+//        var dto = null;
+//        switch (method) {
+//            case "create":
+//                dto = employeeConverter.toReadDto(service.create(entity));
+//                break;
+//            case "getAll":
+//                service.getAll();
+//                break;
+//            case "update":
+//                Integer parsedId = Integer.parseInt(id);
+//                dto = employeeConverter.toReadDto(service.getById(parsedId));
+//                break;
+//
+//            default:
+//                throw new IllegalArgumentException("Invalid method: " + method);
+//        }
+//        return dto;
+//    }
 
     //Операция сохранения юзера в базу данных
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeReadDto saveEmployee(@RequestBody EmployeeDto employeeDto)  {
+    public EmployeeReadDto saveEmployee(@RequestBody EmployeeDto employeeDto) {
         log.info("+++ with dto Start +++");
-        var entity = employeeConverter.getMapperFacade().map(employeeDto, Employee.class);
-        var dto = employeeConverter.toReadDto(service.create(entity));
+        var entity = EmployeeMapper.INSTANCE.toEmployee(employeeDto);
+        var dto = EmployeeMapper.INSTANCE.toReadDTO(entity);
         log.info("+++ with dto Finish +++");
         return dto;
         //service.create(employee);
     }
 
+
+
+
     //Получение списка юзеров
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getAllUsers() {
-        return service.getAll();
+    public List<EmployeeReadDto> getAllUsers() {
+        log.info("+++ with dto Start +++");
+        List<Employee> emplList=service.getAll();
+        List<EmployeeReadDto> emplDtoList=new ArrayList<>();
+        for (Employee employee: emplList) {
+            emplDtoList.add(EmployeeMapper.INSTANCE.toReadDTO(employee));
+        }
+        log.info("+++ with dto Finish +++");
+        return emplDtoList;
     }
 
     //Получения юзера по id
     @GetMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Employee getEmployeeById(@PathVariable String id) {
-
-        Employee employee = service.getById(id);
-        return employee;
+    public EmployeeReadDto getEmployeeById(@PathVariable String id) throws WrongTypeOfDataException {
+        Integer parsedId = Integer.parseInt(id);
+        log.info("+++ with dto Start +++");
+        var dto = EmployeeMapper.INSTANCE.toReadDTO(service.getById(parsedId));
+        log.info("+++ with dto Finish +++");
+        return dto;
     }
 
     //Обновление юзера
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Employee refreshEmployee(@PathVariable("id") Integer id, @RequestBody Employee employee) {
-
-        return service.updateById(id, employee);
+    public EmployeeReadDto refreshEmployee(@PathVariable("id") String id, @RequestBody EmployeeDto employeeDto) throws WrongTypeOfDataException{
+        Integer parseId=Integer.parseInt(id);
+        log.info("+++ with dto Start +++");
+        var entity = EmployeeMapper.INSTANCE.toEmployee(employeeDto);
+        var dto = EmployeeMapper.INSTANCE.toReadDTO(entity);
+        log.info("+++ with dto Finish +++");
+        return dto;
     }
 
     //Удаление по id
     @PatchMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeEmployeeById(@PathVariable Integer id) {
-        service.removeById(id);
+    public void removeEmployeeById(@PathVariable String id) {
+        Integer parseId=Integer.parseInt(id);
+        service.removeById(parseId);
     }
 
     //Удаление всех юзеров
@@ -73,41 +113,53 @@ public class Controller {
         service.removeAll();
     }
 
+
+    //@PatchMapping("/replaceNull")
     @GetMapping("/replaceNull")
     @ResponseStatus(HttpStatus.OK)
-    public void replaceNull() {
+    public void replaceNull(){
         service.processor();
     }
 
     @PostMapping("/sendEmailByCountry")
     @ResponseStatus(HttpStatus.OK)
-    public void sendEmail(@RequestParam String country, @RequestParam String text) {
+    public void sendEmailByCountry(@RequestParam String country, @RequestParam String text){
         service.sendEmailByCountry(country, text);
     }
 
     @PostMapping("/sendEmailByCity")
     @ResponseStatus(HttpStatus.OK)
-    public void sendEmailByCity(@RequestParam String city, @RequestParam String text) {
-        service.sendEmailByCity(city, text);
+    public void sendEmailByCity(@RequestParam String city, @RequestParam String text){
+        service.sendEmailByCountry(city, text);
     }
 
-    @PostMapping("/sendEmailByCountryAndCity")
+    @PostMapping("/sendEmailByStreet")
     @ResponseStatus(HttpStatus.OK)
-    public void sendEmailByCountryAndCity(@RequestParam String country, @RequestParam String city, @RequestParam String text) {
-        service.sendEmailByCountryAndCity(country, city, text);
+    public void sendEmailByStreet(@RequestParam String street, @RequestParam String text){
+        service.sendEmailByStreet(street, text);
     }
 
-    @GetMapping("/fillData")
+    @GetMapping("/databaseFiller")
     @ResponseStatus(HttpStatus.OK)
-    public void fillData() {
-        service.fillData();
-        log.info("Data successful add");
+    public void databaseFiller(@RequestParam Integer amount){
+        service.databaseFiller(amount);
     }
 
+    @PutMapping("/databaseUpdater")
+    @ResponseStatus(HttpStatus.OK)
+    public void databaseUpdater(@RequestParam Integer amount, @RequestParam String country){
+        service.databaseUpdater(amount,country);
+    }
 
-//    @PutMapping("/updateDateById")
-//    @ResponseStatus(HttpStatus.OK)
-//    public void updateDateById() {
-//        service.updateDateById();
-//}
+    @PutMapping("/databaseSQLUpdater")
+    @ResponseStatus(HttpStatus.OK)
+    public void databaseSQLUpdater(@RequestParam Integer amount, @RequestParam String country){
+        service.databaseUpdater(amount,country);
+    }
+
+    @PutMapping("/databaseSQLUpdaterUpd")
+    @ResponseStatus(HttpStatus.OK)
+    public void databaseSQLUpdaterUpd(@RequestParam Integer startId,@RequestParam Integer finishId, @RequestParam String country){
+        service.databaseSQLUpdaterUpd(startId,finishId,country);
+    }
 }

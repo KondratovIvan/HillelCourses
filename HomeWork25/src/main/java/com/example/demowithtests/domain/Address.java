@@ -27,12 +27,4 @@ public class Address {
     @Column(name = "street")
     private String street;
 
-    @Override
-    public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", country='" + country + '\'' +
-                ", city='" + city + '\'' +
-                '}';
-    }
 }
