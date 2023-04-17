@@ -1,0 +1,12 @@
+-- CREATE OR REPLACE FUNCTION my_trigger_function() RETURNS TRIGGER AS $$
+-- DECLARE
+--     v_table_name VARCHAR(100) := 'my_audit_table';
+-- BEGIN
+--     EXECUTE 'CREATE TABLE IF NOT EXISTS ' || v_table_name || ' (id INTEGER, created_date TIMESTAMP)';
+--     EXECUTE 'INSERT INTO ' || v_table_name || ' VALUES ($1.id, NOW())' USING NEW;
+--
+--     RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
+--
+-- CREATE TRIGGER my_trigger AFTER INSERT ON users FOR EACH ROW EXECUTE FUNCTION my_trigger_function();
