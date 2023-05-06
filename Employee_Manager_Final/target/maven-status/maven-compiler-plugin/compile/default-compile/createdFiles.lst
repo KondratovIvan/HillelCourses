@@ -1,5 +1,7 @@
 com\example\demowithtests\domain\employee\Address$AddressBuilder.class
+com\example\demowithtests\util\config\SecurityConfig.class
 com\example\demowithtests\web\employee\EmployeeController.class
+com\example\demowithtests\domain\account\AccountData$AccountDataBuilder.class
 com\example\demowithtests\util\UserAlreadyDeletedException.class
 com\example\demowithtests\domain\employee\Address.class
 com\example\demowithtests\util\ListWasDeletedException.class
@@ -51,6 +53,7 @@ com\example\demowithtests\web\passport\PassportControllerBean.class
 com\example\demowithtests\util\ResourceWasDeletedException.class
 com\example\demowithtests\service\passport\PassportServiceBean.class
 com\example\demowithtests\util\ResourceNotFoundException.class
+com\example\demowithtests\domain\account\AccountData.class
 com\example\demowithtests\util\ListHasNoAnyElementsException.class
 com\example\demowithtests\domain\passport\Registration.class
 com\example\demowithtests\util\UnrealAgeException.class

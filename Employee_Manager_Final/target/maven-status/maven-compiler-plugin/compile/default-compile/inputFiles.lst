@@ -9,6 +9,7 @@ D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\util\CopyDa
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\dto\employee\EmployeeReadDto.java
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\DemoWithTestsApplication.java
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\util\ListHasNoAnyElementsException.java
+D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\util\config\SecurityConfig.java
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\util\EmailAbsentException.java
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\util\UserIsNotExistException.java
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\repository\PassportRepository.java
@@ -28,6 +29,7 @@ D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\service\wor
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\web\employee\EmployeeControllerBean.java
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\web\passport\PassportControllerBean.java
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\repository\WorkplaceRepository.java
+D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\domain\account\AccountData.java
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\service\workplace\WorkplaceService.java
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\domain\passport\Registration.java
 D:\JAVA WORKSPACE\HomeWork29\src\main\java\com\example\demowithtests\util\config\swagger\OpenApiConfig.java

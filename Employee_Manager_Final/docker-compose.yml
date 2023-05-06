@@ -7,7 +7,7 @@ services:
     ports:
       - "8087:8087"
     volumes:
-      - ./target/demo-with-tests.jar:/target/demo-app.jar
+      - ./target/demo-with-tests.jar:/target/demo-with-tests.jar
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/employee
       SPRING_DATASOURCE_USERNAME: postgres
@@ -19,7 +19,7 @@ services:
     depends_on:
       - postgres
       - flyway
-    command: java -jar /target/demo-app.jar
+    command: java -jar /target/demo-with-tests.jar
     # Service health check
     healthcheck:
       test: curl -f http://localhost:8087/profile || exit 1
